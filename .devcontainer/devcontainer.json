@@ -6,7 +6,6 @@
   },
   // Fixed settings
   "name": "project-dev",
-  "postCreateCommand": "go mod download && go mod tidy",
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"
