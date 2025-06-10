@@ -6,7 +6,7 @@
   },
   // Fixed settings
   "name": "project-dev",
-  "postCreateCommand": "~/.windows.sh && go mod download && go mod tidy",
+  "postCreateCommand": "go mod download && go mod tidy",
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"
