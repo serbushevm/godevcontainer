@@ -1,1 +1,1 @@
-FROM qmcgaw/godevcontainer
+FROM ghcr.io/serbushevm/godevcontainer

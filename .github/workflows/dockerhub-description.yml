@@ -14,6 +14,6 @@ jobs:
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v4
         env:
-          DOCKERHUB_USERNAME: qmcgaw
+          DOCKERHUB_USERNAME: serbushevm
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-          DOCKERHUB_REPOSITORY: qmcgaw/godevcontainer
+          DOCKERHUB_REPOSITORY: ghcr.io/serbushevm/godevcontainer

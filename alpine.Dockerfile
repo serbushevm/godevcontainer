@@ -39,7 +39,7 @@ FROM qmcgaw/binpot:kubectx-${KUBECTX_VERSION} AS kubectx
 FROM qmcgaw/binpot:kubens-${KUBENS_VERSION} AS kubens
 FROM qmcgaw/binpot:helm-${HELM_VERSION} AS helm
 
-FROM qmcgaw/basedevcontainer:${BASEDEV_VERSION}-alpine
+FROM ghcr.io/serbushevm/basedevcontainer:alpine
 ARG CREATED
 ARG COMMIT
 ARG VERSION=local
