@@ -1,1 +1,1 @@
-FROM ghcr.io/serbushevm/godevcontainer
+FROM ghcr.io/serbushevm/godevcontainer:debian
