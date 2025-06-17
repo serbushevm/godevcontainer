@@ -57,8 +57,8 @@ LABEL \
     org.opencontainers.image.description="Go development container for Visual Studio Code Dev Containers development"
 # Node.js setup
 COPY --from=node-runtime /usr/local/bin/node          /usr/local/bin/
-COPY --from=node-runtime /usr/local/bin/npm           /usr/local/bin/
-COPY --from=node-runtime /usr/local/bin/npx           /usr/local/bin/
+COPY --from=node-runtime --link /usr/local/bin/npm           /usr/local/bin/
+COPY --from=node-runtime --link /usr/local/bin/npx           /usr/local/bin/
 COPY --from=node-runtime /usr/local/bin/corepack      /usr/local/bin/
 COPY --from=node-runtime /usr/local/lib/node_modules  /usr/local/lib/node_modules
 COPY --from=node-runtime /usr/local/include/node      /usr/local/include/node
