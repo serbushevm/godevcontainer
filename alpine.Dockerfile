@@ -22,7 +22,7 @@ ARG HELM_VERSION=v3.16.2
 ARG NODE_VERSION=22.16
 
 FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS go
-FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node-runtime
+# FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node-runtime
 FROM qmcgaw/binpot:gomodifytags-${GOMODIFYTAGS_VERSION} AS gomodifytags
 FROM qmcgaw/binpot:goplay-${GOPLAY_VERSION} AS goplay
 FROM qmcgaw/binpot:gotests-${GOTESTS_VERSION} AS gotests
@@ -56,13 +56,13 @@ LABEL \
     org.opencontainers.image.title="Go Dev container Alpine" \
     org.opencontainers.image.description="Go development container for Visual Studio Code Dev Containers development"
 # Node.js setup
-COPY --from=node-runtime /usr/local/bin/node          /usr/local/bin/
-COPY --from=node-runtime /usr/local/bin/npm           /usr/local/bin/
-COPY --from=node-runtime /usr/local/bin/npx           /usr/local/bin/
-COPY --from=node-runtime /usr/local/bin/corepack      /usr/local/bin/
-COPY --from=node-runtime /usr/local/lib/node_modules  /usr/local/lib/node_modules
-COPY --from=node-runtime /usr/local/include/node      /usr/local/include/node
-ENV COREPACK_ENABLE=1
+# COPY --from=node-runtime /usr/local/bin/node          /usr/local/bin/
+# COPY --from=node-runtime /usr/local/bin/npm           /usr/local/bin/
+# COPY --from=node-runtime /usr/local/bin/npx           /usr/local/bin/
+# COPY --from=node-runtime /usr/local/bin/corepack      /usr/local/bin/
+# COPY --from=node-runtime /usr/local/lib/node_modules  /usr/local/lib/node_modules
+# COPY --from=node-runtime /usr/local/include/node      /usr/local/include/node
+# ENV COREPACK_ENABLE=1
 # Go setup
 COPY --from=go /usr/local/go /usr/local/go
 ENV GOPATH=/go
