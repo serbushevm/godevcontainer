@@ -22,7 +22,7 @@ ARG HELM_VERSION=v3.16.2
 ARG NODE_VERSION=22.16
 
 FROM golang:${GO_VERSION}-${DEBIAN_VERSION} AS go
-FROM node:${NODE_VERSION}-alpine${DEBIAN_VERSION} AS node-runtime
+FROM node:${NODE_VERSION}-${DEBIAN_VERSION} AS node-runtime
 FROM qmcgaw/binpot:gomodifytags-${GOMODIFYTAGS_VERSION} AS gomodifytags
 FROM qmcgaw/binpot:goplay-${GOPLAY_VERSION} AS goplay
 FROM qmcgaw/binpot:gotests-${GOTESTS_VERSION} AS gotests
