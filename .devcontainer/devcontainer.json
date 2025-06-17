@@ -6,7 +6,7 @@
   },
   // Fixed settings
   "name": "project-dev",
-  // "postCreateCommand": "~/.windows.sh && go mod download && go mod tidy",
+  "postCreateCommand": "~/.windows.sh && go mod download && go mod tidy",
   "build": {
     // Path is relative to the devcontainer.json file.
     "dockerfile": "Dockerfile"
