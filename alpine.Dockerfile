@@ -22,7 +22,7 @@ ARG HELM_VERSION=v3.16.2
 ARG NODE_VERSION=22.16
 
 FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS go
-FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
+FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node-runtime
 FROM qmcgaw/binpot:gomodifytags-${GOMODIFYTAGS_VERSION} AS gomodifytags
 FROM qmcgaw/binpot:goplay-${GOPLAY_VERSION} AS goplay
 FROM qmcgaw/binpot:gotests-${GOTESTS_VERSION} AS gotests
@@ -67,12 +67,12 @@ RUN apk add -q --update --progress --no-cache g++
 COPY shell/.zshrc-specific shell/.welcome.sh /root/
 
 # Node.js setup
-COPY --from=node /usr/local/bin/node          /usr/local/bin/
-COPY --from=node /usr/local/bin/npm           /usr/local/bin/
-COPY --from=node /usr/local/bin/npx           /usr/local/bin/
-COPY --from=node /usr/local/bin/corepack      /usr/local/bin/
-COPY --from=node /usr/local/lib/node_modules  /usr/local/lib/node_modules
-COPY --from=node /usr/local/include/node      /usr/local/include/node
+COPY --from=node-runtime /usr/local/bin/node          /usr/local/bin/
+COPY --from=node-runtime /usr/local/bin/npm           /usr/local/bin/
+COPY --from=node-runtime /usr/local/bin/npx           /usr/local/bin/
+COPY --from=node-runtime /usr/local/bin/corepack      /usr/local/bin/
+COPY --from=node-runtime /usr/local/lib/node_modules  /usr/local/lib/node_modules
+COPY --from=node-runtime /usr/local/include/node      /usr/local/include/node
 ENV COREPACK_ENABLE=1
 
 COPY --from=gomodifytags /bin /go/bin/gomodifytags
