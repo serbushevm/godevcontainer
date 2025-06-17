@@ -19,8 +19,10 @@ ARG KUBECTX_VERSION=v0.9.5
 ARG KUBENS_VERSION=v0.9.5
 ARG HELM_VERSION=v3.16.2
 
+ARG NODE_VERSION=22.16
 
 FROM golang:${GO_VERSION}-${DEBIAN_VERSION} AS go
+FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
 FROM qmcgaw/binpot:gomodifytags-${GOMODIFYTAGS_VERSION} AS gomodifytags
 FROM qmcgaw/binpot:goplay-${GOPLAY_VERSION} AS goplay
 FROM qmcgaw/binpot:gotests-${GOTESTS_VERSION} AS gotests
@@ -67,6 +69,15 @@ RUN apt-get update && \
     rm -r /var/cache/* /var/lib/apt/lists/*
 # Shell setup
 COPY shell/.zshrc-specific shell/.welcome.sh /root/
+
+# Node.js setup
+COPY --from=node /usr/local/bin/node          /usr/local/bin/
+COPY --from=node /usr/local/bin/npm           /usr/local/bin/
+COPY --from=node /usr/local/bin/npx           /usr/local/bin/
+COPY --from=node /usr/local/bin/corepack      /usr/local/bin/
+COPY --from=node /usr/local/lib/node_modules  /usr/local/lib/node_modules
+COPY --from=node /usr/local/include/node      /usr/local/include/node
+ENV COREPACK_ENABLE=1
 
 COPY --from=gomodifytags /bin /go/bin/gomodifytags
 COPY --from=goplay  /bin /go/bin/goplay

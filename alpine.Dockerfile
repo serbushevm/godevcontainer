@@ -1,5 +1,5 @@
 ARG BASEDEV_VERSION=v0.26.0
-ARG ALPINE_VERSION=3.20
+ARG ALPINE_VERSION=3.22
 ARG GO_VERSION=1.23
 ARG GOMODIFYTAGS_VERSION=v1.17.0
 ARG GOPLAY_VERSION=v1.0.0
@@ -19,8 +19,10 @@ ARG KUBECTX_VERSION=v0.9.5
 ARG KUBENS_VERSION=v0.9.5
 ARG HELM_VERSION=v3.16.2
 
+ARG NODE_VERSION=22.16
 
 FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS go
+FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node
 FROM qmcgaw/binpot:gomodifytags-${GOMODIFYTAGS_VERSION} AS gomodifytags
 FROM qmcgaw/binpot:goplay-${GOPLAY_VERSION} AS goplay
 FROM qmcgaw/binpot:gotests-${GOTESTS_VERSION} AS gotests
@@ -63,6 +65,15 @@ WORKDIR $GOPATH
 RUN apk add -q --update --progress --no-cache g++
 # Shell setup
 COPY shell/.zshrc-specific shell/.welcome.sh /root/
+
+# Node.js setup
+COPY --from=node /usr/local/bin/node          /usr/local/bin/
+COPY --from=node /usr/local/bin/npm           /usr/local/bin/
+COPY --from=node /usr/local/bin/npx           /usr/local/bin/
+COPY --from=node /usr/local/bin/corepack      /usr/local/bin/
+COPY --from=node /usr/local/lib/node_modules  /usr/local/lib/node_modules
+COPY --from=node /usr/local/include/node      /usr/local/include/node
+ENV COREPACK_ENABLE=1
 
 COPY --from=gomodifytags /bin /go/bin/gomodifytags
 COPY --from=goplay  /bin /go/bin/goplay
