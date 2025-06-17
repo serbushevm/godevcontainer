@@ -55,6 +55,15 @@ LABEL \
     org.opencontainers.image.source="https://github.com/qdm12/godevcontainer" \
     org.opencontainers.image.title="Go Dev container Debian" \
     org.opencontainers.image.description="Go development container for Visual Studio Code Dev Containers development"
+# Node.js setup
+COPY --from=node-runtime /usr/local/bin/node          /usr/local/bin/
+COPY --from=node-runtime /usr/local/bin/npm           /usr/local/bin/
+COPY --from=node-runtime /usr/local/bin/npx           /usr/local/bin/
+COPY --from=node-runtime /usr/local/bin/corepack      /usr/local/bin/
+COPY --from=node-runtime /usr/local/lib/node_modules  /usr/local/lib/node_modules
+COPY --from=node-runtime /usr/local/include/node      /usr/local/include/node
+ENV COREPACK_ENABLE=1
+# Go setup
 COPY --from=go /usr/local/go /usr/local/go
 ENV GOPATH=/go
 ENV PATH=$GOPATH/bin:/usr/local/go/bin:$PATH \
@@ -69,15 +78,6 @@ RUN apt-get update && \
     rm -r /var/cache/* /var/lib/apt/lists/*
 # Shell setup
 COPY shell/.zshrc-specific shell/.welcome.sh /root/
-
-# Node.js setup
-COPY --from=node-runtime /usr/local/bin/node          /usr/local/bin/
-COPY --from=node-runtime /usr/local/bin/npm           /usr/local/bin/
-COPY --from=node-runtime /usr/local/bin/npx           /usr/local/bin/
-COPY --from=node-runtime /usr/local/bin/corepack      /usr/local/bin/
-COPY --from=node-runtime /usr/local/lib/node_modules  /usr/local/lib/node_modules
-COPY --from=node-runtime /usr/local/include/node      /usr/local/include/node
-ENV COREPACK_ENABLE=1
 
 COPY --from=gomodifytags /bin /go/bin/gomodifytags
 COPY --from=goplay  /bin /go/bin/goplay
