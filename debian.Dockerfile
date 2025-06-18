@@ -63,7 +63,9 @@ COPY --from=node-runtime /usr/local/bin/corepack      /usr/local/bin/
 COPY --from=node-runtime /usr/local/lib/node_modules  /usr/local/lib/node_modules
 COPY --from=node-runtime /usr/local/include/node      /usr/local/include/node
 RUN ln -sf ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
- && ln -sf ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+ && ln -sf ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+ && ln -sf ../lib/node_modules/corepack/dist/corepack.cjs /usr/local/bin/corepack
+
 ENV COREPACK_ENABLE=1
 # Go setup
 COPY --from=go /usr/local/go /usr/local/go
