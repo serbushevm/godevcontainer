@@ -41,7 +41,7 @@ FROM qmcgaw/binpot:kubectx-${KUBECTX_VERSION} AS kubectx
 FROM qmcgaw/binpot:kubens-${KUBENS_VERSION} AS kubens
 FROM qmcgaw/binpot:helm-${HELM_VERSION} AS helm
 
-FROM ghcr.io/serbushevm/basedevcontainer:debian
+FROM ghcr.io/serbushevm/basedevcontainer:v0.1.2-debian
 ARG CREATED
 ARG COMMIT
 ARG VERSION=local
